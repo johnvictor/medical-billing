@@ -1,0 +1,6 @@
+<mat-tab-group (selectedTabChange)="tabClick($event)" [color]="'accent'" [backgroundColor]="'primary'" [selectedIndex]="selectedTabIndex">
+  <mat-tab *ngFor='let route of routeConfig' [label]='route.label'>
+  </mat-tab>
+</mat-tab-group>
+
+<router-outlet></router-outlet>

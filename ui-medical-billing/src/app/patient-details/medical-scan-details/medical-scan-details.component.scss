@@ -1,0 +1,36 @@
+.medical-scan-container {
+    display: flex;
+    margin: 0 auto;
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+table, mat-card {
+    width: 100%;
+}
+
+.add-scan {
+    display: flex;
+    align-items: baseline;
+}
+
+.mat-column-symbol {
+    width: 30px;
+}
+
+.amount, .discount, .add-btn {
+    margin: 0 0 0 20px;
+    span {
+        font-weight: bold;
+        color: #ff2020;
+        margin: 0 0 0 5px;
+    }
+}
+
+.mat-icon {
+    cursor: pointer;
+}
+
+.scan-name, .discount {
+    margin: 0 0 0 10px;
+}

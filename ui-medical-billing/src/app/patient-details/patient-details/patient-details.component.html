@@ -1,0 +1,113 @@
+<div class='form-container'>
+    <mat-card [formGroup]='patientDetialsForm'>
+        <mat-card-header>
+            <mat-card-title>Patient Details</mat-card-title>
+        </mat-card-header>
+        <div class='row'>
+            <div class='column'>
+                <div class='form-label'>Patient Name</div>
+                <mat-form-field appearance="standard" class='salutation'>
+                    <mat-select formControlName='salutation' (selectionChange)='salutionChange($event.value)'>
+                        <mat-option [value]="option" 
+                            *ngFor="let option of salutations">
+                            {{ option  }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="standard" class='name'>
+                    <input matInput formControlName='name'>
+                </mat-form-field>
+            </div>
+            <div class='column'>
+                <div class='form-label'>Gender</div>
+                <mat-radio-group class='gender' formControlName='gender' (change)='genderChange($event.value)'>
+                    <mat-radio-button *ngFor="let option of genders" 
+                        [value]='option.label' [checked]='option.checked'>
+                        {{option.label}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='column'>
+                <div class='form-label'>DOB</div>
+                <mat-form-field appearance="standard" class='dob-date'>
+                    <input matInput [matDatepicker]="picker" formControlName='dob' (dateChange)="setAge($event.value)">
+                    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class='column'>
+                <div class='form-label'>Age</div>
+                <mat-form-field appearance="standard" class='age'>
+                    <input matInput formControlName='age' (keypress)="numberOnly($event)">
+                </mat-form-field>
+                <mat-form-field appearance="standard" class='age-type'>
+                    <mat-select formControlName='ageType' (selectionChange)='ageTypeChange($event.value)'>
+                      <mat-option [value]="option" *ngFor="let option of ageTypes">{{ option  }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='column'>
+                <div class='form-label'>Appointment Date</div>
+                <mat-form-field appearance="standard" class='dob-date'>
+                    <input matInput [matDatepicker]="picker2" formControlName='appointmentDate'>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class='column'>
+                <div class='form-label'>Phone No</div>
+                <mat-form-field appearance="standard">
+                    <input matInput formControlName='phoneNo' (keypress)="numberOnly($event)" maxlength="10">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='form-label'>Address</div>
+            <div  class='address-full-width'>
+                <mat-form-field appearance="standard">
+                    <input matInput formControlName='streetAddress1' placeholder="Street Address">
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <input matInput formControlName='streetAddress2'  placeholder="Street Address 2">
+                </mat-form-field>
+                <div class='address-column'>
+                    <mat-form-field appearance="standard" class='city'>
+                        <input matInput formControlName='city'  placeholder="City">
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" class='state'>
+                        <input matInput formControlName='state'  placeholder="State / Province">
+                    </mat-form-field>
+                </div>
+                <div class='address-column'>
+                    <mat-form-field appearance="standard" class='postal'>
+                        <input matInput formControlName='state' placeholder="Postal / Zip Code">
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-select formControlName='country' placeholder="Select Country">
+                          <mat-option [value]="option" *ngFor="let option of countries">{{ option  }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+        </div>
+    </mat-card>
+</div>
+
+<app-medical-scan-details (medicalScanAdded)='medicalScanAdded($event)'></app-medical-scan-details>
+<div class="form-container error" *ngIf='medicalScanError'>{{medicalScanError}}</div>
+<div class='actions'>
+    <button mat-raised-button type='submit' 
+        color="primary" 
+        (click)='submitForm()'    
+    >Save</button>
+</div>
+
+<!-- [disabled]="!patientDetialsForm.valid" -->
+

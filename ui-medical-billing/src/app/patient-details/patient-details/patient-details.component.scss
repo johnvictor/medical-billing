@@ -1,0 +1,80 @@
+.form-container {
+    width: 800px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+mat-card {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.salutation {
+    width: 48px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.age-type, .name {
+    margin: 0 0 0 10px;
+}
+
+.age {
+    width: 30px;
+}
+
+.row {
+    display: flex;
+    align-items: baseline;
+
+    .column {
+        flex: 1
+    }
+}
+
+.form-label {
+    width: 100px;
+    display: inline-block;
+}
+
+.address-full-width {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.address-column {
+    display: flex;
+    flex: 1;
+
+    mat-form-field {
+        flex: 1;
+    }
+
+    
+    .city, .postal {
+        margin: 0 5px 0 0;
+    }
+
+    .state, .country {
+        margin: 0 0 0 5px;
+    }
+}
+
+.actions {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+    margin: 0 !important;
+    padding-bottom: 1em !important;
+}
+:host ::ng-deep .mat-form-field-infix{
+    border: none !important;
+}

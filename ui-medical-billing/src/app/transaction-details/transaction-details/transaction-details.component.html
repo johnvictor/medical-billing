@@ -1,0 +1,78 @@
+<div class="transaction-details-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>View Appointment</mat-card-title>
+        </mat-card-header>
+        <div class='add-scan' [formGroup]='filterForm'>
+            <div>From Date</div>
+            <div class='value'>
+                <mat-form-field appearance="standard" class='date'>
+                    <input matInput [matDatepicker]="fromdate" formControlName='fromDate'>
+                    <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                    <mat-datepicker #fromdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class='label'>To Date</div>
+            <div class='value'>
+                <mat-form-field appearance="standard" class='date'>
+                    <input matInput [matDatepicker]="todate" formControlName='toDate'>
+                    <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                    <mat-datepicker #todate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class='label'>Status</div>
+            <div class='value'>
+                <mat-form-field appearance="standard">
+                    <mat-select formControlName='status' (selectionChange)='filterbyStatus($event.value)'>
+                        <mat-option></mat-option>
+                        <mat-option [value]="option" *ngFor="let option of options">{{ option  }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class='label'>Common Search</div>
+            <div class='value'>
+                <mat-form-field appearance="standard">
+                    <input matInput formControlName='commonSearch'>
+                </mat-form-field>
+            </div>
+            <div><button class='add-btn' mat-button color="primary" (click)='search()'>Search</button></div>
+        </div>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf='dataSource.data.length'>
+
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef> SNo </th>
+              <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="patientName">
+              <th mat-header-cell *matHeaderCellDef> Patient Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ageGender">
+              <th mat-header-cell *matHeaderCellDef> Age-Gender </th>
+              <td mat-cell *matCellDef="let element"> {{element.ageGender}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="appointmentDate">
+                <th mat-header-cell *matHeaderCellDef> Appointment Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.appointmentDate | date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="balanceAmount">
+                <th mat-header-cell *matHeaderCellDef> Balance Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.balanceAmount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element">
+                  <a [routerLink]="" (click)='pay(element.uuid)'>Click to Pay</a>
+              </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card> 
+</div>

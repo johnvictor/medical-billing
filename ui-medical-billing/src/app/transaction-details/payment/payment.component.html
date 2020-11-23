@@ -1,0 +1,116 @@
+<h2>Patient Billing</h2>
+<div class="payment-container">
+    <div class='current-billing' [formGroup]='paymentForm'>
+        <h3>Current Billing Status</h3>
+        <div class='patient-details'>
+            <div class='row'>
+                <div class='label'>Patient Name</div> <div class='value'>{{patientDetails.patientName}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>PatientID</div> <div class='value'>{{patientDetails.uuid}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>Age/Gender</div> <div class='value'>{{patientDetails.ageGender}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>Total Amount</div> <div class='value'>{{patientDetails.totalAmount}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>Discount</div> <div class='value'>{{patientDetails.discount}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>Paid Amount</div> <div class='value'>{{patientDetails.paidAmount}}</div>
+            </div>
+            <div class='row'>
+                <div class='label'>Balance</div> <div class='value'>{{patientDetails.balanceAmount}}</div>
+            </div>
+        </div>
+
+        <div *ngIf='patientDetails.balanceAmount'>
+            <div class='row' >
+                <div class='payment-details'>Payable Amount:</div> 
+                <div class='value'>
+                    <mat-form-field appearance="standard">
+                        <input matInput formControlName='payableAmount' (keypress)="numberOnly($event)">
+                    </mat-form-field>
+                    <div class='error' *ngIf="paymentForm.get('payableAmount')['errors'] && paymentForm.get('payableAmount')['errors'].error">
+                        {{paymentForm.get('payableAmount')['errors'].error.message}}
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='payment-details'>Payment Mode:</div> 
+                <div class='value'>
+                    <mat-form-field appearance="standard">
+                        <mat-select formControlName='paymentMode' (selectionChange)='paymentModeChange($event.value)'>
+                        <mat-option [value]="option" *ngFor="let option of paymentModes">{{ option  }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div *ngIf='!isCashPayment'>
+                <div class='row'>
+                    <mat-form-field appearance="standard">
+                        <mat-icon matPrefix>person</mat-icon>
+                        <input matInput formControlName='cardHolderName'
+                        placeholder="Cardholder's Name">
+                    </mat-form-field>
+                </div>
+                <div class='row'>
+                    <mat-form-field appearance="standard">
+                        <mat-icon matPrefix>credit_card</mat-icon>
+                        <input matInput formControlName='cardNumber'
+                        placeholder="Card Number">
+                    </mat-form-field>
+                </div>
+                <div>Expiry</div>
+                <div class='row'>
+                    <mat-form-field class='expiry' appearance="standard">
+                        <input matInput formControlName='expiry' placeholder="MM/YYYY">
+                    </mat-form-field>
+                    <mat-form-field class='expiry' appearance="standard">
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput formControlName='cvc'
+                            maxlength='3'
+                        placeholder="CVC">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='previous-transaction'>
+        <h3>Previous Transaction</h3>
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf='dataSource.data.length'>
+
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef> SNo </th>
+              <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="paidAmount">
+              <th mat-header-cell *matHeaderCellDef> Paid Amount </th>
+              <td mat-cell *matCellDef="let element"> {{element.paidAmount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="paymentMode">
+                <th mat-header-cell *matHeaderCellDef> Payment Mode </th>
+                <td mat-cell *matCellDef="let element"> {{element.paymentMode}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+<div class='actions'>
+    <button mat-button color="accent" (click)='cancel()'>Cancel</button>
+    <button mat-button color="primary" (click)='save()' *ngIf='patientDetails.balanceAmount'>Save</button>
+</div>

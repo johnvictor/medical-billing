@@ -1,0 +1,78 @@
+<div class="medical-scan-container">
+
+    <mat-card >
+        <mat-card-header>
+            <mat-card-title>Medical Scan Details</mat-card-title>
+        </mat-card-header>
+        <div class='add-scan' [formGroup]='addScanForm'>
+            <div>Scan List</div>
+            <div>
+                <mat-form-field class='scan-name'>
+                    <input type="text"
+                        aria-label="Number"
+                        matInput
+                        [matAutocomplete]="auto"
+                        #scanItem
+                        formControlName='scanName'
+                        (blur)='onScanSelect(scanItem.value)'>
+
+                    <mat-autocomplete #auto="matAutocomplete" 
+                        (optionSelected)='setScanAmount(scanItem.value)'>
+                        <mat-option *ngFor="let option of scanList" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class='amount'>Scan Amount <span>{{scanAmount}}</span></div>
+
+            <div class='discount'>Discount</div>
+            <div>
+                <mat-form-field appearance="standard" class='discount'>
+                    <input matInput formControlName='discount'>
+                </mat-form-field>
+            </div>
+            <div><button class='add-btn' mat-button color="primary" (click)='addScan()'>Add</button></div>
+        </div>
+        <mat-card-content *ngIf='dataSource.data.length'>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SNo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="scanName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Scan Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.scanName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="scanAmount">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Scan Amount </th>
+                  <td mat-cell *matCellDef="let element"> {{element.scanAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="discount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
+                    <td mat-cell *matCellDef="let element"> {{element.discount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalAmount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+                    <td mat-cell *matCellDef="let element"> {{element.totalAmount}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="symbol">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element; let i = index;" (click)='deleteScan(i)'>
+                      <mat-icon aria-hidden="false" aria-label="Example delete icon">delete</mat-icon>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+      </mat-card>
+    
+</div>

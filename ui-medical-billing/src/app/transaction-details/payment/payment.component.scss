@@ -1,0 +1,52 @@
+.payment-container {
+    display: flex;
+
+    .current-billing {
+        width: 300px;
+    }
+    
+    .previous-transaction {
+        flex: 1;
+    }
+}
+
+table, mat-card {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: baseline;
+
+    .label {
+        width: 100px;
+        margin: 0 20px 0 0;
+        padding: 3px 0;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.payment-details {
+    margin: 0 10px 0 0;
+}
+
+.expiry {
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+    margin: 0 !important;
+    padding-bottom: 1em !important;
+}
+:host ::ng-deep .mat-form-field-infix{
+    border: none !important;
+}
+:host ::ng-deep .mat-form-field-prefix{
+    top: 4px !important;
+}
